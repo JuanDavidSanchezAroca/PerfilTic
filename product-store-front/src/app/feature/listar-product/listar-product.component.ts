@@ -25,6 +25,7 @@ export class ListarProductComponent implements OnInit {
     ];
     return products;
    }
+   /**
    getProducts() {
      this.service.listProducts().subscribe(result => {
        if (result) {
@@ -34,4 +35,5 @@ export class ListarProductComponent implements OnInit {
        }
      });
    }
+   */
 }

@@ -1,20 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { LoginServiceService } from 'src/app/shared/service/login-service.service';
-import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
+import { SecurityService } from 'src/app/core/services/security/security.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+
+
 export class LoginComponent implements OnInit {
+  message = '';
+  loading = false;
+  returnUrl : string;
+  messageInformative = 'Input username and password';
+
   loginForm: FormGroup;
   constructor(
-    private serviceLogin: LoginServiceService,
-    private router: Router
-  ) { }
+    private loginService : SecurityService) { }
 
   ngOnInit() {
     this.loginForm = new FormBuilder().group({
@@ -46,13 +51,26 @@ export class LoginComponent implements OnInit {
     const data = {
       username: this.loginForm.controls.username.value,
       password: this.loginForm.controls.password.value
-    };
-    this.serviceLogin.login(data).subscribe(result => {
-      if (result) {
-        this.router.navigate(['/listar-productos']);
-      } else {
-        alert('Usuario o contraseña invalidos');
+    };   
+    this.loading = true;
+    this.loginService.authenticate(data.username,data.password).subscribe(result => {
+       localStorage.setItem('user', result.user);
+       localStorage.setItem('userRol', JSON.stringify(result.userRol))
+       this.loginService.isSession = true;
+       location.replace('/listar-productos');
+       
+    },
+    err =>{
+      this.loading = false;
+      const error = err as HttpErrorResponse;
+      if(error.status === 403){
+
+        this.message = 'UserName or Password Incorrect!!';
+        
+      }else{
+        this.message = String(err.error.message);
       }
+      Swal.fire('Oops',this.message,'error');
     });
   }
 }
