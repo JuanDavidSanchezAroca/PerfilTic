@@ -16,7 +16,7 @@ public class ManagerListCategory {
 		this.listCategoriesService = listCategoriesService;
 	}
 	
-	public List<List<DtoSubCategory>> ejecute(){
+	public List<DtoSubCategory> ejecute(){
 		return listCategoriesService.list();
 	}
 }

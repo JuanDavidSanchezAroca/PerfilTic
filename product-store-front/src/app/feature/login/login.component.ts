@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
        localStorage.setItem('user', result.user);
        localStorage.setItem('userRol', JSON.stringify(result.userRol))
        this.loginService.isSession = true;
-       location.replace('/listar-productos');
+       location.replace('/list-category');
        
     },
     err =>{

@@ -38,7 +38,7 @@ export class SecurityService{
 
     logout(){
         localStorage.clear();
-        location.replace('/#');
+        location.replace('/');
         this.isSession= false;
         this.http.post('/logout',{}).pipe(
             finalize(() => {})

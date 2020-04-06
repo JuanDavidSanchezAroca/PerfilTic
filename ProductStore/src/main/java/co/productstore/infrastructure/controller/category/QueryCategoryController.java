@@ -20,7 +20,7 @@ public class QueryCategoryController {
 	}
 	
 	@GetMapping
-	public List<List<DtoSubCategory>> list(){
+	public List<DtoSubCategory> list(){
 		return managerListCategory.ejecute();
 	}
 	

@@ -16,13 +16,13 @@ public class ListCategoriesService {
 		this.daoCategory = daoCategory;
 	}
 
-	public List<List<DtoSubCategory>> list() {
+	public List<DtoSubCategory> list() {
 		List<DtoCategory> listFather = daoCategory.categoriesFather();
 		List<DtoCategory> listChildren = daoCategory.categoriesChildren();
-		List<List<DtoSubCategory>> result = new ArrayList<>();
+		List<DtoSubCategory> result = new ArrayList<>();
 
 		for (int i = 0; i < listFather.size(); i++) {
-			result.add(bfs(listFather.get(i), listChildren));
+			result.addAll(bfs(listFather.get(i), listChildren));
 		}
 		return result;
 	}

@@ -1,0 +1,45 @@
+<app-main-nav></app-main-nav>
+
+<div class="container">
+    <div class="my-4">
+        <h3>Lista de Productos</h3>
+    </div>
+    <ul class="row list-product">
+        <li *ngFor="let product of lista | paginate:{itemsPerPage:3 , currentPage:pageActual}" class="mx-2 my-2" style="width: auto;">
+            <ul class="row list-product">
+                <div class="container card px-1">
+                    <div class="card-body">
+                        <div class="info-product">
+                            <div>
+                                <h5>{{product.name}}</h5>
+                            </div>
+                            <div class="">
+                                <span class="">{{product.description}}</span>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <h6>Precio:</h6>
+                                </div>
+                                <div class="col">
+                                    <span>COP: ${{product.price}}</span>
+                                </div>
+                                <div class="col">
+                                    <span>USD: ${{product.priceUSD}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngFor="let images of product.images" class="mx-2 my-2" style="width: auto;">
+                            <div class="media ">
+                                <div class="media-body">
+                                    <img class="rounded mx-auto d-block" id="product-image" src="{{images}}">
+                                    <hr class="mb-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+        </li>
+    </ul>
+    <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+</div>

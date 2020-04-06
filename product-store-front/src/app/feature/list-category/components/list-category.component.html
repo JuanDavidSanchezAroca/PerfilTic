@@ -1,0 +1,33 @@
+<app-main-nav></app-main-nav>
+
+<div class="container">
+    <div class="my-4">
+        <h3 (click)="getCategories()">Category List</h3>
+    </div>
+    <ul class="row category-list">
+        <li *ngFor="let category of list | paginate:{itemsPerPage:4 , currentPage:pageActual} ;let i=index " class="mx-2 my-2"
+            style="width: auto;">
+            <ul class="row list-product">
+                <div class="container card px-1">
+                    <div class="card-body">
+                        <div class="info-category">
+                            <div>
+                                <h5>{{category.name}}</h5>
+                            </div>
+                            <div class="media ">
+                                <div class="media-body">
+                                    <img class="rounded mx-auto d-block" id="category-image" src="{{category.urlPhoto}}">
+                                </div>
+                            </div>
+                            <br>
+                            <div>
+                                <button class="btn btn-primary" (click)="getSubcatogories(list[i])">Ver mas</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+        </li>
+    </ul>
+    <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+</div>
