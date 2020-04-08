@@ -2,7 +2,7 @@
 
 <div class="container">
     <div class="my-4">
-        <h3>Lista de Productos</h3>
+        <h3>List products of Category {{categoryName}}</h3>
     </div>
     <ul class="row list-product">
         <li *ngFor="let product of lista | paginate:{itemsPerPage:3 , currentPage:pageActual}" class="mx-2 my-2" style="width: auto;">
@@ -24,7 +24,7 @@
                                     <span>COP: ${{product.price}}</span>
                                 </div>
                                 <div class="col">
-                                    <span>USD: ${{product.priceUSD}}</span>
+                                    <span>USD: ${{ (product.price / currency.quotes.USDCOP).toFixed(3)}}</span>
                                 </div>
                             </div>
                         </div>

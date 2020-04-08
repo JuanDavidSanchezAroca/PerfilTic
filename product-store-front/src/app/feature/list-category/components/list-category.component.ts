@@ -20,7 +20,6 @@ export class ListCategoryComponent implements OnInit{
         this.listCategoryService.listCategories().subscribe(result => {
             if(result){
                 this.list = result;
-                console.log(this.list);
             }else{
                 alert('No found data');
             }
@@ -28,6 +27,8 @@ export class ListCategoryComponent implements OnInit{
     }
 
     getSubcatogories(elem:Category){
+        localStorage.setItem("category",elem.id+'');
+        localStorage.setItem("categoryName",elem.name);
         if(elem.subCategories){
             return this.list=elem.subCategories;
         }
