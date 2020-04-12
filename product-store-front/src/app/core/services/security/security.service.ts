@@ -29,7 +29,8 @@ export class SecurityService{
 
         const header = new HttpHeaders().set('Content-type','application/json')
         .set('Authorization','basic');
-        return this.http.post("/api/login",body,{
+        const rutaPeticion = `/api/login`;
+        return this.http.post(rutaPeticion,body,{
             headers : header,
             responseType: 'json',
             observe:'body'
@@ -40,7 +41,7 @@ export class SecurityService{
         localStorage.clear();
         location.replace('/');
         this.isSession= false;
-        this.http.post('/logout',{}).pipe(
+        this.http.post('/api/logout',{}).pipe(
             finalize(() => {})
         ).subscribe();
     }

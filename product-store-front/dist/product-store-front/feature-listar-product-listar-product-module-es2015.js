@@ -9,81 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"my-4\">\n    <h3>Lista de Productos</h3>\n</div>\n<div style=\"width: 100%;\">\n<hr>\n</div>\n<div class=\"container\">\n    <ul class=\"row list-product\">\n        <li *ngFor=\"let product of lista\" class=\"mx-2 my-2\" style=\"width: auto;\">\n            <div class=\"container card px-1\">\n                <div class=\"card-body\">\n                    <div class=\"media \">\n                        <div class=\"media-body\">\n                            <img class=\"rounded mx-auto d-block\" id=\"product-image\" src=\"{{product.images}}\">\n                            <hr class=\"mb-1\">\n                            <div class=\"info-product\">\n                                <div>\n                                    <h5>{{product.name}}</h5>\n                                </div>\n                                <div class=\"\">\n                                    <span class=\"\">{{product.description}}</span>\n                                </div>\n                                <div class=\"row\">\n                                    <div class=\"col\">\n                                        <h6>Precio:</h6>\n                                    </div>\n                                    <div class=\"col\">\n                                        <span>COP: ${{product.price}}</span>\n                                    </div>\n                                    <div class=\"col\">\n                                        <span>USD: ${{product.priceUSD}}</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </li>\n    </ul>\n</div>");
-
-/***/ }),
-
-/***/ "./src/app/core/services/rest.service.ts":
-/*!***********************************************!*\
-  !*** ./src/app/core/services/rest.service.ts ***!
-  \***********************************************/
-/*! exports provided: RestService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RestService", function() { return RestService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
-
-
-
-class RestService {
-    constructor(http) {
-        this.http = http;
-    }
-    createDefaultOptions() {
-        return {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' })
-        };
-    }
-    optsName(name) {
-        const newopts = this.createDefaultOptions();
-        newopts.headers['xhr-name'] = name;
-        return newopts;
-    }
-    optsNameCache(name) {
-        const newopts = this.optsName(name);
-        newopts.headers['xhr-plugin'] = 'pcache';
-        return newopts;
-    }
-    createOptions(opts) {
-        const defaultOpts = this.createDefaultOptions();
-        if (opts) {
-            opts = {
-                params: opts.params || defaultOpts.params,
-                headers: opts.headers || defaultOpts.headers
-            };
-            if (!opts.headers['Content-Type']) {
-                opts.headers['Content-Type'] = defaultOpts.headers['Content-Type'];
-            }
-        }
-        return opts || defaultOpts;
-    }
-    optsWithParams(params) {
-        const newopts = this.createDefaultOptions();
-        newopts.params = params;
-        return newopts;
-    }
-    doGet(serviceUrl, opts) {
-        const ropts = this.createOptions(opts);
-        return this.http.get(serviceUrl, ropts).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(response => response));
-    }
-    doPost(serviceUrl, body, opts) {
-        const ropts = this.createOptions(opts);
-        return this.http.post(serviceUrl, body, ropts).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(response => response));
-    }
-    doGetParameters(serviceUrl, parametros, opts) {
-        const ropts = this.createOptions(opts);
-        const options = parametros !== null ? {
-            headers: ropts.headers,
-            params: parametros
-        } : ropts;
-        return this.http.get(serviceUrl, options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(response => response));
-    }
-}
-
+/* harmony default export */ __webpack_exports__["default"] = ("<app-main-nav></app-main-nav>\n\n<div class=\"container\">\n    <div class=\"my-4\">\n        <h3>List products of Category {{categoryName}}</h3>\n    </div>\n    <ul class=\"row list-product\">\n        <li *ngFor=\"let product of lista | paginate:{itemsPerPage:3 , currentPage:pageActual}\" class=\"mx-2 my-2\" style=\"width: auto;\">\n            <ul class=\"row list-product\">\n                <div class=\"container card px-1\">\n                    <div class=\"card-body\">\n                        <div class=\"info-product\">\n                            <div>\n                                <h5>{{product.name}}</h5>\n                            </div>\n                            <div class=\"\">\n                                <span class=\"\">{{product.description}}</span>\n                            </div>\n                            <div class=\"row\">\n                                <div class=\"col\">\n                                    <h6>Precio:</h6>\n                                </div>\n                                <div class=\"col\">\n                                    <span>COP: ${{product.price}}</span>\n                                </div>\n                                <div class=\"col\">\n                                    <span>USD: ${{ (product.price / currency.quotes.USDCOP).toFixed(3)}}</span>\n                                </div>\n                            </div>\n                        </div>\n                        <div *ngFor=\"let images of product.images\" class=\"mx-2 my-2\" style=\"width: auto;\">\n                            <div class=\"media \">\n                                <div class=\"media-body\">\n                                    <img class=\"rounded mx-auto d-block\" id=\"product-image\" src=\"{{images}}\">\n                                    <hr class=\"mb-1\">\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </ul>\n        </li>\n    </ul>\n    <pagination-controls (pageChange)=\"pageActual = $event\"></pagination-controls>\n</div>");
 
 /***/ }),
 
@@ -112,30 +38,64 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ListarProductComponent", function() { return ListarProductComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _shared_service_list_products_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../shared/service/list-products.service */ "./src/app/shared/service/list-products.service.ts");
+/* harmony import */ var _shared_services_list_products_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/services/list-products.service */ "./src/app/feature/listar-product/shared/services/list-products.service.ts");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _shared_services_currency_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/services/currency.service */ "./src/app/feature/listar-product/shared/services/currency.service.ts");
+
+
 
 
 
 let ListarProductComponent = class ListarProductComponent {
-    constructor(service) {
+    constructor(service, serviceCurrency) {
         this.service = service;
+        this.serviceCurrency = serviceCurrency;
+        this.lista = [];
+        this.pageActual = 1;
+        this.message = '';
     }
     ngOnInit() {
-        this.lista = this.retornar();
-        console.log(this.lista);
+        this.getProducts();
+        this.getUsd();
     }
-    retornar() {
-        const products = [
-            { productCode: '1', name: 'Lavadaora', description: 'Lavadora', price: 100, priceUSD: 30, images: ['../../../assets/Lavadora.jpg'] },
-            { productCode: '2', name: 'Lavadaora', description: 'Lavadora', price: 100, priceUSD: 30, images: ['../../../assets/Lavadora.jpg'] },
-            { productCode: '3', name: 'Lavadaora', description: 'Lavadora', price: 100, priceUSD: 30, images: ['../../../assets/large08.jpg'] },
-            { productCode: '4', name: 'Lavadaora', description: 'Lavadora', price: 100, priceUSD: 30, images: ['../../../assets/large08.jpgx'] }
-        ];
-        return products;
+    getProducts() {
+        this.category = localStorage.getItem('category');
+        this.categoryName = localStorage.getItem('categoryName');
+        this.service.listProducts(parseInt(this.category)).subscribe(result => {
+            if (result) {
+                this.lista = result;
+            }
+            else {
+                alert('No se encontraron datos');
+            }
+        }, err => {
+            const error = err;
+            if (error.status === 403) {
+                this.message = 'Tiempo agotado';
+            }
+            else {
+                this.message = String(err.error.message);
+            }
+            sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire('Oops', this.message, 'error');
+            location.replace('/login');
+        });
+    }
+    getUsd() {
+        this.serviceCurrency.getUsdPrice().subscribe(result => {
+            if (result) {
+                this.currency = result;
+                console.log(this.currency.quotes.USDCOP);
+            }
+            else {
+                console.log('Nada');
+            }
+        });
     }
 };
 ListarProductComponent.ctorParameters = () => [
-    { type: _shared_service_list_products_service__WEBPACK_IMPORTED_MODULE_2__["ListProductsService"] }
+    { type: _shared_services_list_products_service__WEBPACK_IMPORTED_MODULE_2__["ListProductsService"] },
+    { type: _shared_services_currency_service__WEBPACK_IMPORTED_MODULE_4__["CurrencyService"] }
 ];
 ListarProductComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -202,6 +162,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
 /* harmony import */ var _listar_product_routing_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./listar-product-routing.module */ "./src/app/feature/listar-product/listar-product-routing.module.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var ngx_pagination__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-pagination */ "./node_modules/ngx-pagination/dist/ngx-pagination.js");
+/* harmony import */ var src_app_core_components_main_nav_main_nav_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/core/components/main-nav/main-nav.component */ "./src/app/core/components/main-nav/main-nav.component.ts");
+
+
 
 
 
@@ -213,14 +177,17 @@ let ListarProductModule = class ListarProductModule {
 ListarProductModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         declarations: [
-            _components_listar_product_component__WEBPACK_IMPORTED_MODULE_2__["ListarProductComponent"]
+            _components_listar_product_component__WEBPACK_IMPORTED_MODULE_2__["ListarProductComponent"],
+            src_app_core_components_main_nav_main_nav_component__WEBPACK_IMPORTED_MODULE_7__["MainNavComponent"]
         ],
         imports: [
             _angular_common__WEBPACK_IMPORTED_MODULE_3__["CommonModule"],
             _listar_product_routing_module__WEBPACK_IMPORTED_MODULE_4__["ListarProductRounting"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormsModule"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_5__["ReactiveFormsModule"]
-        ]
+            _angular_forms__WEBPACK_IMPORTED_MODULE_5__["ReactiveFormsModule"],
+            ngx_pagination__WEBPACK_IMPORTED_MODULE_6__["NgxPaginationModule"],
+        ],
+        schemas: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["CUSTOM_ELEMENTS_SCHEMA"]]
     })
 ], ListarProductModule);
 
@@ -228,10 +195,51 @@ ListarProductModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
-/***/ "./src/app/shared/service/list-products.service.ts":
-/*!*********************************************************!*\
-  !*** ./src/app/shared/service/list-products.service.ts ***!
-  \*********************************************************/
+/***/ "./src/app/feature/listar-product/shared/services/currency.service.ts":
+/*!****************************************************************************!*\
+  !*** ./src/app/feature/listar-product/shared/services/currency.service.ts ***!
+  \****************************************************************************/
+/*! exports provided: CurrencyService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CurrencyService", function() { return CurrencyService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var src_app_core_services_rest_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/services/rest.service */ "./src/app/core/services/rest.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+
+
+
+
+let CurrencyService = class CurrencyService extends src_app_core_services_rest_service__WEBPACK_IMPORTED_MODULE_2__["RestService"] {
+    constructor(http) {
+        super(http);
+        this.http = http;
+    }
+    getUsdPrice() {
+        const rutaCurrency = `/currency/api/live?access_key=aaed874c89ef48420c6f7a00aa3dc222&currencies=COP&source=USD&format=1`;
+        return this.doGet(rutaCurrency);
+    }
+};
+CurrencyService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] }
+];
+CurrencyService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], CurrencyService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/feature/listar-product/shared/services/list-products.service.ts":
+/*!*********************************************************************************!*\
+  !*** ./src/app/feature/listar-product/shared/services/list-products.service.ts ***!
+  \*********************************************************************************/
 /*! exports provided: ListProductsService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -249,10 +257,11 @@ __webpack_require__.r(__webpack_exports__);
 let ListProductsService = class ListProductsService extends src_app_core_services_rest_service__WEBPACK_IMPORTED_MODULE_2__["RestService"] {
     constructor(http) {
         super(http);
+        this.http = http;
     }
-    listProducts() {
-        const rutaPeticion = ``;
-        this.doGet(rutaPeticion);
+    listProducts(id) {
+        const rutaPeticion = `/api/product/${id}`;
+        return this.doGet(rutaPeticion);
     }
 };
 ListProductsService.ctorParameters = () => [
@@ -269,3 +278,4 @@ ListProductsService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /***/ })
 
 }]);
+//# sourceMappingURL=feature-listar-product-listar-product-module-es2015.js.map

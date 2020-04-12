@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './feature/login/login.component';
-import { ListarProductComponent } from './feature/listar-product/components/listar-product.component';
 import { SecurityGuard } from './core/guard/security.guard';
 
 

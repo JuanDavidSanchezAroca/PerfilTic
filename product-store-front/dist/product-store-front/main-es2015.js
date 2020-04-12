@@ -311,18 +311,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
 /* harmony import */ var _feature_login_login_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./feature/login/login.component */ "./src/app/feature/login/login.component.ts");
+/* harmony import */ var _core_guard_security_guard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./core/guard/security.guard */ "./src/app/core/guard/security.guard.ts");
+
 
 
 
 
 const routes = [
-    { path: "", component: _feature_login_login_component__WEBPACK_IMPORTED_MODULE_3__["LoginComponent"] },
-    {
-        path: "",
+    { path: 'login', component: _feature_login_login_component__WEBPACK_IMPORTED_MODULE_3__["LoginComponent"] },
+    { path: '', pathMatch: 'full', redirectTo: 'login' },
+    { path: "", canActivate: [_core_guard_security_guard__WEBPACK_IMPORTED_MODULE_4__["SecurityGuard"]],
         children: [
             {
                 path: "listar-product",
-                loadChildren: () => __webpack_require__.e(/*! import() | feature-listar-product-listar-product-module */ "feature-listar-product-listar-product-module").then(__webpack_require__.bind(null, /*! ./feature/listar-product/listar-product.module */ "./src/app/feature/listar-product/listar-product.module.ts")).then(m => m.ListarProductModule)
+                loadChildren: () => Promise.all(/*! import() | feature-listar-product-listar-product-module */[__webpack_require__.e("default~feature-list-category-list-category-module~feature-listar-product-listar-product-module"), __webpack_require__.e("feature-listar-product-listar-product-module")]).then(__webpack_require__.bind(null, /*! ./feature/listar-product/listar-product.module */ "./src/app/feature/listar-product/listar-product.module.ts")).then(m => m.ListarProductModule)
+            },
+            {
+                path: "list-category",
+                loadChildren: () => Promise.all(/*! import() | feature-list-category-list-category-module */[__webpack_require__.e("default~feature-list-category-list-category-module~feature-listar-product-listar-product-module"), __webpack_require__.e("feature-list-category-list-category-module")]).then(__webpack_require__.bind(null, /*! ./feature/list-category/list-category.module */ "./src/app/feature/list-category/list-category.module.ts")).then(m => m.ListCategoryModule)
             }
         ]
     }
@@ -433,6 +439,47 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
+/***/ "./src/app/core/guard/security.guard.ts":
+/*!**********************************************!*\
+  !*** ./src/app/core/guard/security.guard.ts ***!
+  \**********************************************/
+/*! exports provided: SecurityGuard */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SecurityGuard", function() { return SecurityGuard; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+
+let SecurityGuard = class SecurityGuard {
+    constructor(router) {
+        this.router = router;
+    }
+    canActivate(route, state) {
+        if (localStorage.getItem('user')) {
+            return true;
+        }
+        location.replace('/');
+        return false;
+    }
+};
+SecurityGuard.ctorParameters = () => [
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"] }
+];
+SecurityGuard = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])({
+        providedIn: 'root'
+    })
+], SecurityGuard);
+
+
+
+/***/ }),
+
 /***/ "./src/app/core/services/security/security.service.ts":
 /*!************************************************************!*\
   !*** ./src/app/core/services/security/security.service.ts ***!
@@ -473,9 +520,9 @@ let SecurityService = class SecurityService {
     }
     logout() {
         localStorage.clear();
-        location.replace('/#');
+        location.replace('/');
         this.isSession = false;
-        this.http.post('/logout', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(() => { })).subscribe();
+        this.http.post('/api/logout', {}).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(() => { })).subscribe();
     }
 };
 SecurityService.ctorParameters = () => [
@@ -563,7 +610,7 @@ let LoginComponent = class LoginComponent {
             localStorage.setItem('user', result.user);
             localStorage.setItem('userRol', JSON.stringify(result.userRol));
             this.loginService.isSession = true;
-            location.replace('/listar-product');
+            location.replace('/list-category');
         }, err => {
             this.loading = false;
             const error = err;
@@ -632,19 +679,22 @@ const environment = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/platform-browser-dynamic */ "./node_modules/@angular/platform-browser-dynamic/fesm2015/platform-browser-dynamic.js");
-/* harmony import */ var _app_app_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app/app.module */ "./src/app/app.module.ts");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var hammerjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! hammerjs */ "./node_modules/hammerjs/hammer.js");
+/* harmony import */ var hammerjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(hammerjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/platform-browser-dynamic */ "./node_modules/@angular/platform-browser-dynamic/fesm2015/platform-browser-dynamic.js");
+/* harmony import */ var _app_app_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app/app.module */ "./src/app/app.module.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./environments/environment */ "./src/environments/environment.ts");
 
 
 
 
 
-if (_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].production) {
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["enableProdMode"])();
+
+if (_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].production) {
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["enableProdMode"])();
 }
-Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformBrowserDynamic"])().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_3__["AppModule"])
+Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_3__["platformBrowserDynamic"])().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_4__["AppModule"])
     .catch(err => console.error(err));
 
 
@@ -663,3 +713,4 @@ module.exports = __webpack_require__(/*! /home/juan-david/Repositorios/PerfilTic
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
+//# sourceMappingURL=main-es2015.js.map

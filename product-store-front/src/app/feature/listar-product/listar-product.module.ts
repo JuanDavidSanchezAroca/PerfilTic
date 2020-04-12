@@ -10,8 +10,7 @@ import { MainNavComponent } from 'src/app/core/components/main-nav/main-nav.comp
 
 @NgModule({
     declarations: [
-        ListarProductComponent,
-        MainNavComponent
+        ListarProductComponent
     ],
     imports: [
         CommonModule,
